@@ -1,5 +1,5 @@
 # RealiGym — *The realistic way to train*
-
+I'm still testing, this was vibecoded, too barebones right now
 ## Run it
 ```
 pip install -r requirements.txt
