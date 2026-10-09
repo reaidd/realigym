@@ -1,0 +1,332 @@
+# RealiGym exercise library
+# Every exercise lives here exactly once. Programmes reference exercises by `id`.
+#
+# Fields
+#   id            unique snake_case id (never rename once logs exist — logs point at it)
+#   name          {en, zh}   (zh names are drafts → see review item "zh-names")
+#   type          compound | isolation
+#   equipment     list of: barbell, dumbbell, cable, machine, bodyweight
+#   muscles       primary muscles trained
+#   alternatives  ids of exercises that can replace this one (used for equipment swaps)
+#   video_url     demo video link — fill in later
+#   form_cues     list of {en, zh} cues — empty until the Form Guide is written (🔍 form-guide)
+
+# ---------- Chest ----------
+- id: machine_chest_press
+  name: {en: Machine chest press, zh: 器械胸推}
+  type: compound
+  equipment: [machine]
+  muscles: [chest, front_delts, triceps]
+  alternatives: [db_incline_bench]
+
+- id: db_incline_bench
+  name: {en: Dumbbell incline bench press, zh: 啞鈴上斜臥推}
+  type: compound
+  equipment: [dumbbell]
+  muscles: [upper_chest, front_delts, triceps]
+  alternatives: [machine_chest_press]
+
+- id: machine_chest_fly
+  name: {en: Machine chest fly, zh: 器械胸部飛鳥}
+  type: isolation
+  equipment: [machine]
+  muscles: [chest]
+
+# ---------- Back ----------
+- id: machine_chest_supported_wide_row
+  name: {en: Machine chest-supported wide-grip row, zh: 器械胸托寬握划船}
+  type: compound
+  equipment: [machine]
+  muscles: [upper_back, rear_delts, lats]
+
+- id: cable_close_grip_row
+  name: {en: Cable close-grip row, zh: 繩索窄握划船}
+  type: compound
+  equipment: [cable]
+  muscles: [lats, mid_back]
+  alternatives: [machine_close_grip_row]
+
+- id: machine_close_grip_row
+  name: {en: Machine close-grip row, zh: 器械窄握划船}
+  type: compound
+  equipment: [machine]
+  muscles: [lats, mid_back]
+  alternatives: [cable_close_grip_row]
+
+- id: cable_lat_pulldown
+  name: {en: Cable lat pulldown, zh: 繩索高位下拉}
+  type: compound
+  equipment: [cable]
+  muscles: [lats, biceps]
+  alternatives: [machine_lat_pulldown]
+
+- id: machine_lat_pulldown
+  name: {en: Machine lat pulldown, zh: 器械高位下拉}
+  type: compound
+  equipment: [machine]
+  muscles: [lats, biceps]
+  alternatives: [cable_lat_pulldown]
+
+- id: cable_lat_pullover
+  name: {en: Cable lat pullover, zh: 繩索直臂下拉}
+  type: isolation
+  equipment: [cable]
+  muscles: [lats]
+
+# ---------- Shoulders ----------
+- id: db_overhead_press
+  name: {en: Dumbbell overhead press, zh: 啞鈴肩推}
+  type: compound
+  equipment: [dumbbell]
+  muscles: [front_delts, triceps]
+  alternatives: [machine_overhead_press]
+
+- id: machine_overhead_press
+  name: {en: Machine overhead press, zh: 器械肩推}
+  type: compound
+  equipment: [machine]
+  muscles: [front_delts, triceps]
+  alternatives: [db_overhead_press]
+
+- id: cable_lateral_raise
+  name: {en: Cable lateral raise, zh: 繩索側平舉}
+  type: isolation
+  equipment: [cable]
+  muscles: [side_delts]
+  alternatives: [db_lateral_raise, machine_lateral_raise]
+
+- id: db_lateral_raise
+  name: {en: Dumbbell lateral raise, zh: 啞鈴側平舉}
+  type: isolation
+  equipment: [dumbbell]
+  muscles: [side_delts]
+  alternatives: [cable_lateral_raise, machine_lateral_raise]
+
+- id: machine_lateral_raise
+  name: {en: Machine lateral raise, zh: 器械側平舉}
+  type: isolation
+  equipment: [machine]
+  muscles: [side_delts]
+  alternatives: [cable_lateral_raise, db_lateral_raise]
+
+- id: cable_rear_delt_fly
+  name: {en: Cable rear delt fly, zh: 繩索後三角飛鳥}
+  type: isolation
+  equipment: [cable]
+  muscles: [rear_delts]
+  alternatives: [machine_rear_delt_fly]
+
+- id: machine_rear_delt_fly
+  name: {en: Machine rear delt fly, zh: 器械後三角飛鳥}
+  type: isolation
+  equipment: [machine]
+  muscles: [rear_delts]
+  alternatives: [cable_rear_delt_fly]
+
+# ---------- Arms ----------
+- id: db_preacher_curl
+  name: {en: Dumbbell preacher curl, zh: 啞鈴牧師椅彎舉}
+  type: isolation
+  equipment: [dumbbell]
+  muscles: [biceps]
+  alternatives: [db_curl, db_lying_supinated_curl]
+
+- id: db_curl
+  name: {en: Dumbbell curl, zh: 啞鈴彎舉}
+  type: isolation
+  equipment: [dumbbell]
+  muscles: [biceps]
+  alternatives: [db_preacher_curl]
+
+- id: db_lying_supinated_curl
+  name: {en: Dumbbell lying supinated curl, zh: 啞鈴仰臥旋後彎舉}
+  type: isolation
+  equipment: [dumbbell]
+  muscles: [biceps]
+  alternatives: [db_curl]
+
+- id: db_preacher_hammer_curl
+  name: {en: Dumbbell preacher hammer curl, zh: 啞鈴牧師椅錘式彎舉}
+  type: isolation
+  equipment: [dumbbell]
+  muscles: [brachialis, brachioradialis]
+
+- id: cable_triceps_overhead_extension
+  name: {en: Cable triceps overhead extension, zh: 繩索過頭三頭伸展}
+  type: isolation
+  equipment: [cable]
+  muscles: [triceps]
+
+- id: cable_triceps_pushdown
+  name: {en: Cable triceps pushdown, zh: 繩索三頭下壓}
+  type: isolation
+  equipment: [cable]
+  muscles: [triceps]
+
+# ---------- Legs ----------
+- id: barbell_squat
+  name: {en: Barbell squat, zh: 槓鈴深蹲}
+  type: compound
+  equipment: [barbell]
+  muscles: [quads, glutes, adductors]
+  alternatives: [machine_hack_squat, db_bulgarian_split_squat]
+
+- id: machine_hack_squat
+  name: {en: Machine hack / pendulum squat, zh: 器械哈克／鐘擺深蹲}
+  type: compound
+  equipment: [machine]
+  muscles: [quads, glutes]
+  alternatives: [barbell_squat]
+
+- id: db_bulgarian_split_squat
+  name: {en: Dumbbell Bulgarian split squat, zh: 啞鈴保加利亞分腿蹲}
+  type: compound
+  equipment: [dumbbell]
+  muscles: [quads, glutes]
+  alternatives: [supported_split_squat, barbell_squat]
+
+- id: supported_split_squat
+  name: {en: Supported split squat, zh: 扶持分腿蹲}
+  type: compound
+  equipment: [dumbbell, bodyweight]
+  muscles: [quads, glutes]
+  alternatives: [db_bulgarian_split_squat]
+  review: [added-exercises]
+
+- id: barbell_rdl
+  name: {en: Barbell Romanian deadlift (RDL), zh: 槓鈴羅馬尼亞硬舉}
+  type: compound
+  equipment: [barbell]
+  muscles: [hamstrings, glutes, lower_back]
+  alternatives: [cable_rdl]
+
+- id: cable_rdl
+  name: {en: Cable Romanian deadlift (RDL), zh: 繩索羅馬尼亞硬舉}
+  type: compound
+  equipment: [cable]
+  muscles: [hamstrings, glutes, lower_back]
+  alternatives: [barbell_rdl]
+
+- id: db_walking_lunge
+  name: {en: Dumbbell walking lunge, zh: 啞鈴行進弓步}
+  type: compound
+  equipment: [dumbbell]
+  muscles: [glutes, quads]
+
+- id: machine_hip_thrust
+  name: {en: Machine hip thrust, zh: 器械臀推}
+  type: compound
+  equipment: [machine]
+  muscles: [glutes]
+
+- id: machine_leg_extension
+  name: {en: Machine leg extension, zh: 器械腿伸展}
+  type: isolation
+  equipment: [machine]
+  muscles: [quads]
+
+- id: machine_leg_curl
+  name: {en: Machine leg curl, zh: 器械腿彎舉}
+  type: isolation
+  equipment: [machine]
+  muscles: [hamstrings]
+  alternatives: [machine_standing_leg_curl]
+
+- id: machine_standing_leg_curl
+  name: {en: Machine standing leg curl, zh: 器械站姿腿彎舉}
+  type: isolation
+  equipment: [machine]
+  muscles: [hamstrings]
+  alternatives: [machine_leg_curl]
+
+- id: machine_hip_abduction
+  name: {en: Machine hip abduction, zh: 器械髖外展}
+  type: isolation
+  equipment: [machine]
+  muscles: [glute_med]
+  alternatives: [cable_hip_abduction]
+
+- id: cable_hip_abduction
+  name: {en: Cable hip abduction, zh: 繩索髖外展}
+  type: isolation
+  equipment: [cable]
+  muscles: [glute_med]
+  alternatives: [machine_hip_abduction]
+
+- id: machine_hip_adduction
+  name: {en: Machine hip adduction, zh: 器械髖內收}
+  type: isolation
+  equipment: [machine]
+  muscles: [adductors]
+  alternatives: [cable_hip_adduction]
+
+- id: cable_hip_adduction
+  name: {en: Cable hip adduction, zh: 繩索髖內收}
+  type: isolation
+  equipment: [cable]
+  muscles: [adductors]
+  alternatives: [machine_hip_adduction]
+
+- id: calf_raise
+  name: {en: Calf raise (machine / barbell / Smith), zh: 提踵（器械／槓鈴／史密斯機）}
+  type: isolation
+  equipment: [machine, barbell]
+  muscles: [calves]
+
+# ---------- Core ----------
+- id: hanging_leg_raise
+  name: {en: Hanging leg raise, zh: 懸垂舉腿}
+  type: isolation
+  equipment: [bodyweight]
+  muscles: [abs, hip_flexors]
+
+- id: side_plank_dip
+  name: {en: Side plank dip, zh: 側平板支撐髖下沉}
+  type: isolation
+  equipment: [bodyweight]
+  muscles: [obliques]
+
+- id: suitcase_carry
+  name: {en: Suitcase carry, zh: 單手提箱行走}
+  type: isolation
+  equipment: [dumbbell]
+  muscles: [obliques, grip]
+
+- id: plank
+  name: {en: Plank, zh: 平板支撐}
+  type: isolation
+  equipment: [bodyweight]
+  muscles: [abs]
+
+- id: machine_back_extension
+  name: {en: Machine back extension, zh: 器械背部伸展}
+  type: isolation
+  equipment: [machine]
+  muscles: [lower_back, glutes]
+  alternatives: [bird_dog]
+
+- id: bird_dog
+  name: {en: Bird dog, zh: 鳥狗式}
+  type: isolation
+  equipment: [bodyweight]
+  muscles: [lower_back, glutes]
+  alternatives: [machine_back_extension]
+  review: [added-exercises]
+
+- id: machine_cable_crunch
+  name: {en: Machine / cable crunch, zh: 器械／繩索捲腹}
+  type: isolation
+  equipment: [machine, cable]
+  muscles: [abs]
+
+- id: cable_horizontal_chop
+  name: {en: Cable horizontal chop, zh: 繩索水平伐木}
+  type: isolation
+  equipment: [cable]
+  muscles: [obliques]
+
+- id: cable_pallof_press
+  name: {en: Cable Pallof press, zh: 繩索抗旋轉推（Pallof）}
+  type: isolation
+  equipment: [cable]
+  muscles: [obliques, abs]

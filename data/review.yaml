@@ -1,0 +1,38 @@
+# 🔍 Review items — things to come back to later.
+# Anything in the data can point at one of these ids with `review: [id]`,
+# and the app shows a 🔍 marker next to it. Delete an item once it's resolved
+# (and remove the references — the tests will tell you if any are left dangling).
+
+- id: form-guide
+  title: Form Guide not written yet
+  note: >-
+    The Form Guide is currently only a table of contents. Exercise form cues,
+    "Dealing with injuries" and "Principles of programming" (how to pick exercises)
+    still need writing. Every exercise without form cues shows this marker automatically.
+
+- id: osteoporosis-stat
+  title: Check the osteoporosis figure
+  note: >-
+    Form Guide → "Should women lift?" says half of post-menopausal women develop
+    osteoporosis. The commonly cited figure is that about 1 in 2 women over 50 will
+    break a bone due to osteoporosis — confirm the source before it goes in the app.
+
+- id: zh-names
+  title: Chinese names are drafts
+  note: >-
+    Chinese exercise names, day names and group labels were drafted by Claude.
+    Check the terminology is what you'd actually say in a Hong Kong gym.
+    Setup notes are English-only for now and fall back to English in Chinese mode.
+
+- id: added-exercises
+  title: Exercises added to the limited-equipment programme
+  note: >-
+    Supported split squat (easier fallback for Bulgarian split squats) and bird dog
+    (bodyweight spinal extension for the core day) were added. Confirm with your friend.
+
+- id: session-length
+  title: Sessions run longer than the guide suggests
+  note: >-
+    With the guide's rest times and a pyramid warmup before every exercise, the
+    estimated session length is well over the "not a lot of time" pitch. Consider
+    only warming up the first exercise per muscle group, or shorter isolation rests.

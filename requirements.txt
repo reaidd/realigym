@@ -1,0 +1,5 @@
+streamlit>=1.46
+pyyaml>=6.0
+pytest>=8.0
+# added when we connect logging:
+# supabase
