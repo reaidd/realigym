@@ -1,0 +1,390 @@
+# RealiGym programmes
+# Structure: programme → variants → days → groups (pairs from the guide) → items
+#
+# Item fields
+#   ex        exercise id from exercises.yaml
+#   sets      number of working sets
+#   range     [min, max] target
+#   unit      reps (default) | seconds | steps
+#   note      {en, zh} setup note specific to this programme/variant
+#   optional  true if the item can be skipped
+#   review    list of review ids (🔍) — see review.yaml
+#
+# Programme fields
+#   image     optional intro image (path in assets/ or URL). Empty = the app draws the weekly schedule.
+#
+# Group fields
+#   superset  must | optional (default) | never   — from the guide's "If short on time" remarks
+#
+# Day fields
+#   kind      gym (default) | rest_core  (core work done on a rest day; not counted in days_per_week)
+#
+# schedule: 7 slots starting Sunday; each slot is a day id or "rest"
+
+# Shared core session from Programme two (5-day). Reused as an optional rest-day
+# session in Program A, which the guide says needs core work on rest days.
+_shared:
+  core_rest_day: &core_rest_day
+    id: CORE
+    kind: rest_core
+    name: {en: Core (rest day), zh: 核心（休息日）}
+    groups:
+      - label: {en: "Core, isolation", zh: 核心・孤立}
+        items:
+          - {ex: hanging_leg_raise, sets: 3, range: [6, 10]}
+          - {ex: side_plank_dip, sets: 3, range: [8, 12]}
+      - label: {en: "Core, isolation", zh: 核心・孤立}
+        items:
+          - {ex: suitcase_carry, sets: 3, range: [12, 20], unit: steps}
+          - {ex: plank, sets: 3, range: [60, 60], unit: seconds}
+
+programs:
+  # ===================================================================
+  - id: program_a
+    name: {en: Program A — 3-day full body, zh: 計劃 A — 三天全身訓練}
+    summary:
+      en: >-
+        For beginners who want to build muscle without spending a lot of time in the gym.
+        Flexible schedule that fits around whole-day plans or short weekend trips.
+      zh: >-
+        適合想增肌但不想花太多時間在健身室的初學者。時間表靈活，可配合全日活動或週末短途旅行。
+    days_per_week: 3
+    levels: [beginner]
+    pros:
+      - {en: "Flexible schedule — rest days between every session"}
+      - {en: "Good balance of training volume and fatigue for significant muscle gain"}
+    cons:
+      - {en: "Lower volume for some muscle groups that respond to high volume"}
+      - {en: "Core work is not included on gym days — do it on rest days"}
+    variants:
+      # ---------------------------------------------------------------
+      - id: standard
+        name: {en: Commercial gym, zh: 商業健身室}
+        equipment: commercial
+        schedule: [A, rest, B, rest, C, rest, rest]
+        days:
+          - id: A
+            name: {en: Full body A — upper biased, zh: 全身 A — 上肢為主}
+            groups:
+              - label: {en: "Chest and back, compound", zh: 胸、背・複合}
+                items:
+                  - {ex: machine_chest_press, sets: 3, range: [5, 8]}
+                  - {ex: machine_chest_supported_wide_row, sets: 3, range: [5, 8]}
+              - label: {en: "Front delt and back, compound", zh: 前三角、背・複合}
+                items:
+                  - {ex: db_overhead_press, sets: 3, range: [5, 8]}
+                  - {ex: cable_lat_pulldown, sets: 3, range: [5, 8]}
+              - label: {en: "Biceps and triceps, isolation", zh: 二頭、三頭・孤立}
+                items:
+                  - {ex: cable_triceps_overhead_extension, sets: 3, range: [6, 10]}
+                  - {ex: db_preacher_curl, sets: 3, range: [6, 10]}
+              - label: {en: "Quadriceps and hamstrings, isolation", zh: 股四頭、腿後肌・孤立}
+                items:
+                  - {ex: machine_leg_extension, sets: 3, range: [6, 10]}
+                  - {ex: machine_leg_curl, sets: 3, range: [6, 10]}
+
+          - id: B
+            name: {en: Full body B — lower biased, zh: 全身 B — 下肢為主}
+            groups:
+              - label: {en: "Leg, compound and isolation", zh: 腿・複合及孤立}
+                superset: never
+                items:
+                  - {ex: barbell_squat, sets: 3, range: [5, 8]}
+                  - {ex: machine_leg_curl, sets: 3, range: [6, 10]}
+              - label: {en: "Glutes and adductors, isolation", zh: 臀、內收肌・孤立}
+                superset: must
+                items:
+                  - {ex: machine_hip_abduction, sets: 3, range: [6, 10]}
+                  - {ex: machine_hip_adduction, sets: 3, range: [6, 10]}
+              - label: {en: "Chest and back, compound", zh: 胸、背・複合}
+                items:
+                  - {ex: db_incline_bench, sets: 3, range: [5, 8]}
+                  - {ex: cable_close_grip_row, sets: 3, range: [5, 8]}
+              - label: {en: "Side and rear delts, isolation", zh: 側、後三角・孤立}
+                items:
+                  - {ex: cable_lateral_raise, sets: 3, range: [6, 10]}
+                  - {ex: cable_rear_delt_fly, sets: 3, range: [6, 10]}
+
+          - id: C
+            name: {en: Full body C — lower biased, zh: 全身 C — 下肢為主}
+            groups:
+              - label: {en: "Leg, compound and isolation", zh: 腿・複合及孤立}
+                superset: never
+                items:
+                  - {ex: barbell_rdl, sets: 3, range: [5, 8]}
+                  - {ex: machine_leg_extension, sets: 3, range: [6, 10]}
+              - label: {en: "Glutes, compound", zh: 臀・複合}
+                items:
+                  - {ex: db_walking_lunge, sets: 3, range: [5, 8]}
+              - label: {en: "Chest and rear delt, isolation", zh: 胸、後三角・孤立}
+                superset: must
+                items:
+                  - {ex: machine_chest_fly, sets: 3, range: [6, 10]}
+                  - {ex: machine_rear_delt_fly, sets: 3, range: [6, 10]}
+              - label: {en: "Side delt and back, isolation", zh: 側三角、背・孤立}
+                items:
+                  - {ex: cable_lateral_raise, sets: 3, range: [6, 10]}
+                  - {ex: cable_lat_pullover, sets: 3, range: [6, 10]}
+              - label: {en: "Brachialis and triceps, isolation", zh: 肱肌、三頭・孤立}
+                items:
+                  - {ex: db_preacher_hammer_curl, sets: 3, range: [6, 10]}
+                  - {ex: cable_triceps_pushdown, sets: 3, range: [6, 10]}
+
+          - <<: *core_rest_day
+            note: {en: "Optional — do on any rest day. Same core session as Program B."}
+
+      # ---------------------------------------------------------------
+      - id: limited
+        name: {en: Limited equipment (clubhouse), zh: 器材有限（會所健身室）}
+        equipment: limited
+        note:
+          en: >-
+            Adapted for a small clubhouse gym with limited equipment. Some setup notes
+            refer to that gym's machines and may not apply elsewhere.
+        schedule: [A, rest, B, rest, C, CORE, rest]
+        days:
+          - id: A
+            name: {en: Full body A — upper biased, zh: 全身 A — 上肢為主}
+            groups:
+              - label: {en: "Chest and back, compound", zh: 胸、背・複合}
+                items:
+                  - {ex: machine_chest_press, sets: 3, range: [5, 8]}
+                  - {ex: machine_chest_supported_wide_row, sets: 3, range: [5, 8]}
+              - label: {en: "Front delt and back, compound", zh: 前三角、背・複合}
+                items:
+                  - {ex: db_overhead_press, sets: 3, range: [5, 8]}
+                  - {ex: cable_lat_pulldown, sets: 3, range: [5, 8]}
+              - label: {en: "Biceps and triceps, isolation", zh: 二頭、三頭・孤立}
+                items:
+                  - ex: cable_triceps_overhead_extension
+                    sets: 3
+                    range: [6, 10]
+                    note: {en: "Ideally hook a straight bar to the chest-height cable on the leg machine."}
+                  - {ex: db_curl, sets: 3, range: [6, 10]}
+              - label: {en: "Quadriceps and hamstrings, isolation", zh: 股四頭、腿後肌・孤立}
+                items:
+                  - {ex: machine_leg_extension, sets: 3, range: [6, 10]}
+                  - {ex: machine_standing_leg_curl, sets: 3, range: [6, 10]}
+
+          - id: B
+            name: {en: Full body B — lower biased, zh: 全身 B — 下肢為主}
+            groups:
+              - label: {en: "Leg, compound and isolation", zh: 腿・複合及孤立}
+                superset: never
+                items:
+                  - ex: db_bulgarian_split_squat
+                    sets: 3
+                    range: [5, 8]
+                    note: {en: "If balance is difficult, swap to a supported split squat (hold onto something stable)."}
+                    review: [added-exercises]
+                  - {ex: machine_standing_leg_curl, sets: 3, range: [6, 10]}
+              - label: {en: "Glutes and adductors, isolation", zh: 臀、內收肌・孤立}
+                superset: must
+                items:
+                  - {ex: cable_hip_abduction, sets: 3, range: [6, 10]}
+                  - ex: cable_hip_adduction
+                    sets: 3
+                    range: [6, 10]
+                    note: {en: "Use the dual D-handle, or consider buying a cable ankle strap for better stability."}
+              - label: {en: "Chest and back, compound", zh: 胸、背・複合}
+                items:
+                  - {ex: db_incline_bench, sets: 3, range: [5, 8]}
+                  - {ex: machine_close_grip_row, sets: 3, range: [5, 8]}
+              - label: {en: "Side and rear delts, isolation", zh: 側、後三角・孤立}
+                items:
+                  - {ex: db_lateral_raise, sets: 3, range: [6, 10]}
+                  - ex: cable_rear_delt_fly
+                    sets: 3
+                    range: [6, 10]
+                    note: {en: "Use the rope attachment on the highest cable and grip both ends of the rope to stop it slipping."}
+
+          - id: C
+            name: {en: Full body C — lower biased, zh: 全身 C — 下肢為主}
+            groups:
+              - label: {en: "Leg, compound and isolation", zh: 腿・複合及孤立}
+                superset: never
+                items:
+                  - ex: cable_rdl
+                    sets: 3
+                    range: [5, 8]
+                    note:
+                      en: >-
+                        Use the straight bar on the lowest cable and stand as close to it as you can.
+                        The first rep will be a conventional deadlift. If too challenging, use dumbbells.
+                  - {ex: machine_leg_extension, sets: 3, range: [6, 10]}
+              - label: {en: "Glutes, compound", zh: 臀・複合}
+                items:
+                  - {ex: db_walking_lunge, sets: 3, range: [5, 8]}
+              - label: {en: "Chest and back, isolation", zh: 胸、背・孤立}
+                items:
+                  - {ex: machine_chest_fly, sets: 3, range: [6, 10]}
+                  - {ex: cable_lat_pullover, sets: 3, range: [6, 10]}
+              - label: {en: "Core, isolation", zh: 核心・孤立}
+                items:
+                  - ex: machine_cable_crunch
+                    sets: 3
+                    range: [6, 10]
+                    note:
+                      en: >-
+                        Can use the leg machine with the dual D-handle, though it rubs on the shoulders.
+                        Or use the highest cable and kneel on the floor.
+              - label: {en: "Core, isolation", zh: 核心・孤立}
+                items:
+                  - ex: cable_horizontal_chop
+                    sets: 3
+                    range: [6, 10]
+                    note: {en: "Use the chest-height cable on the leg machine."}
+                  - ex: cable_pallof_press
+                    sets: 3
+                    range: [8, 12]
+                    note: {en: "Use the chest-height cable on the leg machine."}
+
+          - id: CORE
+            kind: rest_core
+            name: {en: Core (rest day), zh: 核心（休息日）}
+            groups:
+              - label: {en: "Core, isolation", zh: 核心・孤立}
+                items:
+                  - {ex: side_plank_dip, sets: 3, range: [8, 12]}
+                  - {ex: suitcase_carry, sets: 3, range: [8, 12], unit: steps}
+                  - {ex: plank, sets: 3, range: [60, 60], unit: seconds}
+              - label: {en: "Lower back, isolation", zh: 下背・孤立}
+                items:
+                  - ex: bird_dog
+                    sets: 3
+                    range: [8, 12]
+                    optional: true
+                    note: {en: "Bodyweight option for spinal extension, which the clubhouse equipment can't train safely."}
+                    review: [added-exercises]
+
+  # ===================================================================
+  - id: program_b
+    name: {en: Program B — 5-day Upper/Lower/Full, zh: 計劃 B — 五天上下肢／全身分化}
+    summary:
+      en: >-
+        For more experienced lifters, or beginners who are hooked and want to train more often.
+        Higher weekly volume, with upper and lower days split to keep fatigue manageable.
+      zh: >-
+        適合較有經驗的訓練者，或想增加訓練頻率的初學者。每週訓練量較高，上下肢分開訓練以控制疲勞。
+    days_per_week: 5
+    levels: [intermediate, advanced]
+    pros:
+      - {en: "Hits every major muscle group, including every core action, with plenty of volume"}
+      - {en: "Splitting upper and lower body allows harder sets with less fatigue"}
+    cons:
+      - {en: "Upper days are a bit long"}
+      - {en: "Harder to schedule around — skip the Full day to free up two rest days in a row"}
+    variants:
+      - id: standard
+        name: {en: Commercial gym, zh: 商業健身室}
+        equipment: commercial
+        schedule: [UA, LA, CORE, UB, LB, F, rest]
+        days:
+          - id: UA
+            name: {en: Upper A, zh: 上肢 A}
+            groups:
+              - label: {en: "Chest and back, compound", zh: 胸、背・複合}
+                items:
+                  - {ex: db_incline_bench, sets: 3, range: [5, 8]}
+                  - {ex: machine_chest_supported_wide_row, sets: 3, range: [5, 8]}
+              - label: {en: "Front delt and back, compound and isolation", zh: 前三角、背・複合及孤立}
+                items:
+                  - {ex: db_overhead_press, sets: 3, range: [5, 8]}
+                  - {ex: cable_lat_pullover, sets: 3, range: [6, 10]}
+              - label: {en: "Chest and rear delts, isolation", zh: 胸、後三角・孤立}
+                superset: must
+                items:
+                  - {ex: machine_chest_fly, sets: 3, range: [6, 10]}
+                  - {ex: machine_rear_delt_fly, sets: 3, range: [6, 10]}
+              - label: {en: "Side delts, isolation", zh: 側三角・孤立}
+                items:
+                  - {ex: machine_lateral_raise, sets: 3, range: [6, 10]}
+              - label: {en: "Brachialis and triceps, isolation", zh: 肱肌、三頭・孤立}
+                items:
+                  - {ex: db_preacher_hammer_curl, sets: 3, range: [6, 10]}
+                  - {ex: cable_triceps_pushdown, sets: 3, range: [6, 10]}
+
+          - id: LA
+            name: {en: Lower A, zh: 下肢 A}
+            groups:
+              - label: {en: "Leg, compound", zh: 腿・複合}
+                superset: never
+                items:
+                  - {ex: barbell_squat, sets: 3, range: [5, 8]}
+                  - {ex: barbell_rdl, sets: 3, range: [5, 8]}
+              - label: {en: "Glutes and adductors, isolation", zh: 臀、內收肌・孤立}
+                superset: must
+                items:
+                  - {ex: machine_hip_abduction, sets: 3, range: [6, 10]}
+                  - {ex: machine_hip_adduction, sets: 3, range: [6, 10]}
+              - label: {en: "Quadriceps and hamstrings, isolation", zh: 股四頭、腿後肌・孤立}
+                items:
+                  - {ex: machine_leg_extension, sets: 3, range: [6, 10]}
+                  - {ex: machine_leg_curl, sets: 3, range: [6, 10]}
+              - label: {en: "Calves, isolation", zh: 小腿・孤立}
+                items:
+                  - {ex: calf_raise, sets: 3, range: [8, 15]}
+
+          - *core_rest_day
+
+          - id: UB
+            name: {en: Upper B, zh: 上肢 B}
+            groups:
+              - label: {en: "Chest and back, compound", zh: 胸、背・複合}
+                items:
+                  - {ex: machine_chest_press, sets: 3, range: [5, 8]}
+                  - {ex: cable_close_grip_row, sets: 3, range: [5, 8]}
+              - label: {en: "Front delt and back, compound", zh: 前三角、背・複合}
+                items:
+                  - {ex: machine_overhead_press, sets: 3, range: [5, 8]}
+                  - ex: cable_lat_pulldown
+                    sets: 3
+                    range: [5, 8]
+                    note: {en: "Cable or machine pulldown both work."}
+              - label: {en: "Side and rear delts, isolation", zh: 側、後三角・孤立}
+                items:
+                  - {ex: cable_lateral_raise, sets: 3, range: [6, 10]}
+                  - {ex: cable_rear_delt_fly, sets: 3, range: [6, 10]}
+              - label: {en: "Biceps and triceps, isolation", zh: 二頭、三頭・孤立}
+                items:
+                  - {ex: db_preacher_curl, sets: 3, range: [6, 10]}
+                  - {ex: cable_triceps_overhead_extension, sets: 3, range: [6, 10]}
+
+          - id: LB
+            name: {en: Lower B, zh: 下肢 B}
+            groups:
+              - label: {en: "Leg, compound", zh: 腿・複合}
+                superset: never
+                items:
+                  - {ex: machine_hack_squat, sets: 3, range: [5, 8]}
+                  - {ex: barbell_rdl, sets: 3, range: [5, 8]}
+              - label: {en: "Glutes, compound", zh: 臀・複合}
+                items:
+                  - {ex: machine_hip_thrust, sets: 3, range: [5, 8]}
+              - label: {en: "Quadriceps and hamstrings, isolation", zh: 股四頭、腿後肌・孤立}
+                items:
+                  - {ex: machine_leg_extension, sets: 3, range: [6, 10]}
+                  - {ex: machine_leg_curl, sets: 3, range: [6, 10]}
+              - label: {en: "Calves, isolation", zh: 小腿・孤立}
+                items:
+                  - {ex: calf_raise, sets: 3, range: [8, 15]}
+
+          - id: F
+            name: {en: Full, zh: 全身}
+            groups:
+              - label: {en: "Biceps and triceps, isolation", zh: 二頭、三頭・孤立}
+                items:
+                  - {ex: db_lying_supinated_curl, sets: 3, range: [6, 10]}
+                  - {ex: cable_triceps_overhead_extension, sets: 3, range: [6, 10]}
+              - label: {en: "Brachialis and side delts, isolation", zh: 肱肌、側三角・孤立}
+                items:
+                  - {ex: db_preacher_hammer_curl, sets: 3, range: [6, 10]}
+                  - {ex: cable_lateral_raise, sets: 3, range: [6, 10]}
+              - label: {en: "Core, isolation", zh: 核心・孤立}
+                items:
+                  - {ex: machine_back_extension, sets: 3, range: [8, 12]}
+                  - {ex: machine_cable_crunch, sets: 3, range: [6, 10]}
+              - label: {en: "Core, isolation", zh: 核心・孤立}
+                items:
+                  - {ex: cable_horizontal_chop, sets: 3, range: [6, 10]}
+                  - {ex: cable_pallof_press, sets: 3, range: [8, 12]}

@@ -1,5 +1,6 @@
 streamlit>=1.46
+Authlib>=1.3.2
+supabase>=2.0
 pyyaml>=6.0
+pandas
 pytest>=8.0
-# added when we connect logging:
-# supabase
